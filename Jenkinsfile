@@ -10,6 +10,11 @@ pipeline {
     environment {
         DEBUG = 'true'
         appVersion = '' // this will become global, we can use across pipeline
+        region = 'us-east-1'
+        account_id = '211125410910'
+        project = 'expense'
+        environment = 'dev'
+        component = 'backend'
     }
 
     stages {
@@ -29,10 +34,17 @@ pipeline {
         }
         stage('Docker build') {
             steps {
+                withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                     sh """
-                    docker build -t kalpanadevops/backend:${appVersion} .
+                    aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.us-east-1.amazonaws.com
+
+                    docker build -t ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion} .
+
                     docker images
+
+                    docker push ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion}
                     """
+                }
             }
         }
     } 
