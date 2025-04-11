@@ -13,7 +13,7 @@ pipeline {
         region = 'us-east-1'
         account_id = '211125410910'
         project = 'expense'
-        environment = 'dev'
+        environment = 'deve'
         component = 'backend'
     }
 
@@ -43,6 +43,18 @@ pipeline {
                     docker images
 
                     docker push ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion}
+                    """
+                }
+            }
+        }
+        stage('Deploy'){
+            steps{
+                withAWS(region: 'us-east-1', credentials: 'aws-creds') {
+                    sh """
+                        aws eks update-kubeconfig --region ${region} --name ${project}-${environment}
+                        cd helm
+                        sed -i 's/IMAGE_VERSION/${appVersion}/g' values-${environment}.yaml
+                        helm upgrade --install ${component} -n ${project} -f values-${environment}.yaml .
                     """
                 }
             }

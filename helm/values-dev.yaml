@@ -1,0 +1,13 @@
+ConfigMap:
+  db_host: expense-deve.ctuuoqco0hx9.us-east-1.rds.amazonaws.com    
+deployment:
+  imageURL: 211125410910.dkr.ecr.us-east-1.amazonaws.com/expense/dev/backend 
+  imageVersion: IMAGE_VERSION
+hpa:
+  cpuUtilization: 20
+
+
+# dynamically we should replace our app version with this image version
+# db_host: give rds endpoint because now we are using rds, before we run containers mysql
+# imageURL: from ecr push 4th command copy from number till backend.
+# imageVersion: is frequently changing so dynamically i have to replace this with appVersion. for that using sed editor.

@@ -1,0 +1,20 @@
+apiVersion: v1
+name: backend
+version: 0.0.1
+description: This chart is to manage backend application
+
+
+
+# it defines the metadata about your chart 
+
+# apiVersion:	 Helm chart API version (v2 is current for Helm 3)
+#name:	       Name of the chart
+#description:	Short description of what this chart does
+#type:	      Can be application (default) or library
+#version:	    Version of the chart itself (independent from the app version)
+#appVersion:	Version of the app you're deploying (e.g., nginx 1.21)
+#keywords:	  Optional tags to help categorize the chart
+#maintainers:	List of maintainers (name + email)
+#sources:	    URLs for the app source code or documentation
+#home:	      Homepage of the project
+#dependencies: Other charts this one depends on (for monorepo/microservice setups)
