@@ -59,6 +59,13 @@ pipeline {
                 }
             }
         }
+        stage('SQuality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        } 
         stage('Deploy'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds') {
