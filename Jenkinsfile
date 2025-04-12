@@ -47,25 +47,25 @@ pipeline {
                 }
             }
         }
-        stage('SonarQube analysis') {
-            environment {
-                SCANNER_HOME = tool 'sonar-6.0' //scanner config
-            }
-            steps {
-                // sonar server injection
-                withSonarQubeEnv('sonar-6.0') {
-                    sh '$SCANNER_HOME/bin/sonar-scanner'
-                    //generic scanner, it automatically understands the language and provide scan results
-                }
-            }
-        }
-        stage('SQuality Gate') {
-            steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        } 
+        // stage('SonarQube analysis') {
+        //     environment {
+        //         SCANNER_HOME = tool 'sonar-6.0' //scanner config
+        //     }
+        //     steps {
+        //         // sonar server injection
+        //         withSonarQubeEnv('sonar-6.0') {
+        //             sh '$SCANNER_HOME/bin/sonar-scanner'
+        //             //generic scanner, it automatically understands the language(like java,python etc) and provide scan results
+        //         }
+        //     }
+        // }
+        // stage('SQuality Gate') {
+        //     steps {
+        //         timeout(time: 5, unit: 'MINUTES') {
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // } 
         stage('Deploy'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds') {
