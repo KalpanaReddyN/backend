@@ -16,5 +16,6 @@
     "mysql2": "latest",
     "node-fetch": "^2.6.1",
     "moment" : "latest"
+    "serialize-javascript": "1.9.1"
   }
 }
